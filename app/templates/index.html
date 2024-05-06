@@ -1,0 +1,91 @@
+{% load static %}
+{% include 'base.html' %}
+
+{% block body %}
+    <!-- Sidebar Start -->
+    <div class="sidebar pe-4 pb-3">
+        <nav class="navbar sidebar-color navbar-dark">
+        <a href="#" class="navbar-brand mx-4 mb-3">
+            <h4 class="text-primary">AI Stock-Tracker</h4>
+        </a>
+        <div class="d-flex align-items-center ms-4 mb-4">
+            <div class="ms-3">
+            <h6 class="mb-0">Welcome back Trader</h6>
+            <span style="color: white">{{request.user.username}}</span>
+            </div>
+        </div>
+        <div class="navbar-nav w-100">
+            <a href="/" class="nav-item nav-link active"
+            ><i class="fa fa-home me-2"></i>Home</a
+            >
+            <a href="/search" class="nav-item nav-link"
+            ><i class="fa fa-list-alt me-2"></i>Stock Predict</a
+            >
+        </div>
+        </nav>
+        </div>
+    <!-- Sidebar End -->
+    <!-- Content Start -->
+    <div class="content">
+    <div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-12">
+        <div class="bg-secondary text-center rounded p-4">
+            <div
+            class="d-flex align-items-center justify-content-between mb-4"
+            >
+            <h6 class="mb-0">Live view</h6>
+            </div>
+            {% block Left_Plot %} {% autoescape off %} {{ plot_div_left }}
+            {% endautoescape %} {% endblock Left_Plot %}
+        </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="container-fluid pt-4 px-4">
+    <div class="bg-secondary text-center rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+        <h6 class="mb-0">Stocks info for geeks</h6>
+        <a href="https://finance.yahoo.com/trending-tickers">Show All</a>
+        </div>
+        <div class="table-responsive">
+        <table
+            class="table text-start align-middle table-bordered table-hover mb-0"
+        >
+            <thead>
+            <tr class="text-white">
+                <th scope="col">Ticker</th>
+                <th scope="col">Open</th>
+                <th scope="col">High</th>
+                <th scope="col">Low</th>
+                <th scope="col">Close</th>
+                <th scope="col">Adj. Close</th>
+                <th scope="col">Volume</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if recent_stocks %} {% for i in recent_stocks %}
+            <tr>
+                <td>{{i.Ticker}}</td>
+                <td>{{i.Open}}</td>
+                <td>{{i.High}}</td>
+                <td>{{i.Low}}</td>
+                <td>{{i.Close}}</td>
+                <td>{{i.Adj_Close}}</td>
+                <td>{{i.Volume}}</td>
+            </tr>
+            {% endfor %} {% endif %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+    </div>
+    </div>
+    <!-- Content End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-color btn-lg-square back-to-top"
+    ><i class="bi bi-arrow-up"></i
+    ></a>
+{% endblock %}
